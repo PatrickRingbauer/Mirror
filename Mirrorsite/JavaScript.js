@@ -4,10 +4,13 @@ $(document).ready(function () {
     console.log("1");
     gettingJSON();
     setInterval(function () {
-        console.log("6 - in interval");                    // wird jede 2 sekunden aufgerufen
+        console.log("6 - in interval");                    // wird jede 10 Minuten aufgerufen
         gettingJSON();
     }, 600000);
-    console.log("neue test zeile verändert");
+
+    setInterval(function () {
+        startTime();
+    }, 500);
 });
 
 function gettingJSON() {
@@ -25,4 +28,20 @@ function gettingJSON() {
 function updateUI() {
     console.log("5 - in updateUI");
     document.getElementById('temp').innerHTML = myjson.main.temp;
+}
+
+function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    m = checkTime(m);
+    s = checkTime(s);
+    document.getElementById('time').innerHTML =
+        h + ":" + m + ":" + s;
+
+}
+function checkTime(i) {
+    if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
+    return i;
 }
