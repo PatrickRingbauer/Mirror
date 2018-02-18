@@ -2,23 +2,39 @@
 <html>
 <head>
     <title>Weather</title>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>    <!-- adds jQuery -->
     <script src="JavaScript.js"></script>
 
+    <noscript>Bitte aktivieren Sie JavaScript</noscript>
+
     <style>
-        p {
-            font-size: 30px;
+        #time {
+            font-size: 80px;
             margin: 5%;
+        }
+
+        .wetter {
+            font-size: 50px;
+            margin: 2%;
+        }
+        #success {
+            color: red;
         }
     </style>
 </head>
 <body>
-    <p id="temp"></p>
+
     <p id="time"></p>
 
-    <p>
-        Hello World!
-    </p>
+    <div class="wetter">
+        <p id="city"></p>
+        <p id="temp"></p>
+        <p id="humi"></p>
+        <p id="windspeed"></p>
+        <p id="beschreibung"></p>
+        <p id="success"></p>
+    </div>
 
 
 </body>
