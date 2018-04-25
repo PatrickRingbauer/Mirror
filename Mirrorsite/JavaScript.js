@@ -1,6 +1,8 @@
 ﻿var myjson;
-var city;
-var land;
+var url;
+var lang = "de";
+var city = "bad mergentheim";
+var land = "de";
 
 $(document).ready(function () {
     console.log("1");
@@ -19,18 +21,22 @@ $(document).ready(function () {
 
 function gettingJSON() {
     console.log("2 - getting JSON start");
-    $.getJSON('http://api.openweathermap.org/data/2.5/weather?id=2862831&lang=de&APPID=00c5a9bacda1d265d5ad4692edf1acaf', function (json, status) {             // holt die JSON
-        console.log('4 - in "getJSON" callback function')
+    $.getJSON(getURL(), function (json, status) {             // holt die JSON
+        console.log('4 - in "getJSON" callback function');
         console.log("status: " + status);
         console.log(json.name);
-        if (status =! "success") {
-            document.getElementById('success').innerHTML = "Fehler beim Wetterdatenabruf"
-        }
+        //if (status =! "success") {
+        //    document.getElementById('success').innerHTML = "Fehler beim Wetterdatenabruf";
+        //}
         myjson = json;
         updateUI();
     });    
 
     console.log("3 - Zeile nach getJSON()");
+}
+
+function getURL() {
+    return "http://api.openweathermap.org/data/2.5/weather?q=" + city + "," + land + "&lang=" + lang + "&APPID=00c5a9bacda1d265d5ad4692edf1acaf";
 }
 
 function updateUI() {
@@ -42,7 +48,6 @@ function updateUI() {
     document.getElementById('windspeed').innerHTML = "Windgeschwindigkeit " + myjson.wind.speed + " km/h";
     document.getElementById('description').innerHTML = myjson.weather[0].description;
     document.getElementById("image").src = "http://openweathermap.org/img/w/"+ myjson.weather[0].icon +".png";
-
 }
 
 function startTime() {
@@ -55,7 +60,10 @@ function startTime() {
     document.getElementById('time').innerHTML = h + ":" + m + ":" + s;
 }
 function checkTime(i) {
-    if (i < 10) { i = "0" + i };  // add zero in front of numbers < 10
+    if (i < 10)
+    {
+        i = "0" + i;
+    }  // add zero in front of numbers < 10
     return i;
 }
 
