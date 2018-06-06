@@ -17,6 +17,27 @@ $(document).ready(function () {
     setInterval(function () {                               // wird jede 0,5 Sekunden aufgerufen
         startTime();
     }, 500);
+
+    var ws = new WebSocket("ws://localhost:9999");
+    ws.onopen = function () {
+
+        // Web Socket is connected, send data using send()
+        ws.send("Message to send");
+        //alert("Message is sent...");
+        console.log("Message is sent...");
+    };
+
+    ws.onmessage = function (evt) {
+        var received_msg = evt.data;
+        //alert("Message is received...");
+        console.log("Message is received..." + JSON.stringify(evt));
+    };
+
+    ws.onclose = function () {
+
+        // websocket is closed.
+        alert("Connection is closed...");
+    };
 });
 
 function gettingJSON() {
@@ -30,7 +51,7 @@ function gettingJSON() {
         //}
         myjson = json;
         updateUI();
-    });    
+    });
 
     console.log("3 - Zeile nach getJSON()");
 }
@@ -47,7 +68,7 @@ function updateUI() {
     document.getElementById('humi').innerHTML = "Luftfeuchtigkeit " + myjson.main.humidity + " %";
     document.getElementById('windspeed').innerHTML = "Windgeschwindigkeit " + myjson.wind.speed + " km/h";
     document.getElementById('description').innerHTML = myjson.weather[0].description;
-    document.getElementById("image").src = "http://openweathermap.org/img/w/"+ myjson.weather[0].icon +".png";
+    document.getElementById("image").src = "http://openweathermap.org/img/w/" + myjson.weather[0].icon + ".png";
 }
 
 function startTime() {
@@ -57,11 +78,18 @@ function startTime() {
     var s = today.getSeconds();
     m = checkTime(m);
     s = checkTime(s);
-    document.getElementById('time').innerHTML = h + ":" + m + ":" + s;
+    //document.getElementById('time').innerHTML = h + ":" + m + ":" + s;
+
+    var day = today.getDate();
+    var month = today.getMonth();
+    var year = today.getFullYear();
+    day = checkTime(day);
+    month = checkTime(month);
+    document.getElementById('date').innerHTML = day + "." + month + "." + year + " " + h + ":" + m + ":" + s;
 }
+
 function checkTime(i) {
-    if (i < 10)
-    {
+    if (i < 10) {
         i = "0" + i;
     }  // add zero in front of numbers < 10
     return i;

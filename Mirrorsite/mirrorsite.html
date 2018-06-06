@@ -8,30 +8,13 @@
 
     <noscript>Bitte aktivieren Sie JavaScript</noscript>
 
-    <style>
-        body {
-            background-color: black;
-            color: white;
-            font-family: Arial;
-        }       
+    <link rel="stylesheet" href="styles.css">
 
-        #time {
-            font-size: 80px;
-            margin: 2%;
-        }
-
-        .weather {
-            font-size: 40px;
-            margin: 2%;
-        }
-        #success {
-            color: red;
-        }
-    </style>
 </head>
 <body>
 
-    <p id="time"></p>
+    <p id="date"></p>           <!-- div span -->
+
 
     <div class="weather">
         <p id="city"></p>
@@ -40,20 +23,13 @@
         <p id="windspeed"></p>
         <p id="description"></p>
         <img id="image" width="100" height="100">
+        <p id="note"></p>
         <p id="success"></p>
     </div>
-    <script>
-        var sock = new WebSocket("ws://localhost:5001");
-        sock.onopen = function (event) {
-            alert('Socket connected successdully');
-            setTimeout(function () {
-                sock.send("Hey there");
-            }, 1000)
-        };
-        sock.onmessage = function (event) {
-            console.log(event);
-        }
-    </script>
+    <input type="text" placeholder="Your message here" id="text" />
+    <button>Send</button>
+    <div id="log"></div>
+
 
 
 </body>

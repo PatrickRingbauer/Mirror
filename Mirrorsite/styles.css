@@ -1,0 +1,23 @@
+﻿
+body {
+    background-color: black;
+    color: white;
+    font-family: Arial;
+    margin-left: 2%;
+    line-height: 1.1em;
+}
+
+#date {
+    font-size: 80px;
+    padding-bottom: 1px;
+}
+
+
+
+.weather {
+    font-size: 40px;
+}
+
+#success {
+    color: red;
+}
