@@ -21,17 +21,12 @@ $(document).ready(function () {
 
     var ws = new WebSocket("ws://localhost:9999");
     ws.onopen = function () {
-
-        // Web Socket is connected, send data using send()
-        ws.send("Message to send");
-        //alert("Message is sent...");
-        console.log("Message is sent...");
+        console.log("onOpen");
     };
 
-    ws.onmessage = function (evt) {
-        var received_msg = JSON.parse(evt.data);
-        //alert("Message is received...");
-        console.log("Message is received..." + JSON.stringify(evt.data));
+    ws.onmessage = function (websocket) {
+        var received_msg = JSON.parse(websocket.data);
+        console.log("Message is received..." + JSON.stringify(websocket.data));
         lang = received_msg["lang"];
         city = received_msg["city"];
         notes = received_msg["notes"];
@@ -50,15 +45,10 @@ $(document).ready(function () {
 
 function gettingJSON() {
     console.log("2 - getting JSON start");
-    console.log("request URL: " + getURL());
     $.getJSON(getURL(), function (json, status) {             // holt die JSON
         console.log('4 - in "getJSON" callback function');
-        console.log("response: " + JSON.stringify(name));
         console.log("status: " + status);
         console.log(json.name);
-        //if (status =! "success") {
-        //    document.getElementById('success').innerHTML = "Fehler beim Wetterdatenabruf";
-        //}
         myjson = json;
         updateUI();
     });

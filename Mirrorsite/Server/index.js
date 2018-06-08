@@ -10,6 +10,7 @@ var clients = [];
 app.use(bodyParser.json());
 
 ws.on('connection', function (client) {
+    console.log("on connection open: " + client);
     clients.push(client);
 });
 
@@ -24,6 +25,7 @@ app.post('/weather', function (req, res) {
         "notes": notes
     }
     clients.forEach(function (client) {
+        console.log("in forEach: " + client);
         client.send(JSON.stringify(objectToSend));
     });
     res.send(JSON.stringify({ "statusCode": "OK" }))
