@@ -1,7 +1,8 @@
 ﻿var myjson;
 var url;
-var lang = "de";
-var city = "bad mergentheim";
+var lang = localStorage.getItem("lang");
+var city = localStorage.getItem("city");
+var notes = localStorage.getItem("notes");
 var land = "de";
 
 $(document).ready(function () {
@@ -28,22 +29,31 @@ $(document).ready(function () {
     };
 
     ws.onmessage = function (evt) {
-        var received_msg = evt.data;
+        var received_msg = JSON.parse(evt.data);
         //alert("Message is received...");
-        console.log("Message is received..." + JSON.stringify(evt));
+        console.log("Message is received..." + JSON.stringify(evt.data));
+        lang = received_msg["lang"];
+        city = received_msg["city"];
+        notes = received_msg["notes"];
+        localStorage.setItem("lang", lang);
+        localStorage.setItem("city", city);
+        localStorage.setItem("notes", notes);
+        gettingJSON();
     };
 
     ws.onclose = function () {
 
         // websocket is closed.
-        alert("Connection is closed...");
+        console.log("Connection is closed...");
     };
 });
 
 function gettingJSON() {
     console.log("2 - getting JSON start");
+    console.log("request URL: " + getURL());
     $.getJSON(getURL(), function (json, status) {             // holt die JSON
         console.log('4 - in "getJSON" callback function');
+        console.log("response: " + JSON.stringify(name));
         console.log("status: " + status);
         console.log(json.name);
         //if (status =! "success") {
@@ -78,14 +88,14 @@ function startTime() {
     var s = today.getSeconds();
     m = checkTime(m);
     s = checkTime(s);
-    //document.getElementById('time').innerHTML = h + ":" + m + ":" + s;
+    document.getElementById('time').innerHTML = h + ":" + m + ":" + s;
 
     var day = today.getDate();
     var month = today.getMonth();
     var year = today.getFullYear();
     day = checkTime(day);
     month = checkTime(month);
-    document.getElementById('date').innerHTML = day + "." + month + "." + year + " " + h + ":" + m + ":" + s;
+    document.getElementById('date').innerHTML = day + "." + month + "." + year;
 }
 
 function checkTime(i) {
