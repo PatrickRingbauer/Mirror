@@ -18,7 +18,7 @@ app.post('/weather', function (req, res) {
     var city = req.body["city"];
     var country = req.body["country"];
     var notes = req.body["notes"];
-    console.log('Hello World!' + city + " " + country);
+    console.log('App :' + city + " " + country + " " + notes );
     var objectToSend = {
         "city": city,
         "country": country,
@@ -31,7 +31,7 @@ app.post('/weather', function (req, res) {
     res.send(JSON.stringify({ "statusCode": "OK" }))
 })
 
-app.listen(3000, () => console.log('Example app listening on port 3000!'))
+app.listen(3000, () => console.log('listening on port 3000!'))
 
 
 

@@ -1,9 +1,9 @@
 ﻿var myjson;
 var url;
-var lang = localStorage.getItem("lang");
+var lang = "de";
 var city = localStorage.getItem("city");
 var notes = localStorage.getItem("notes");
-var land = "de";
+var land = localStorage.getItem("country");
 
 $(document).ready(function () {
     console.log("1");
@@ -27,10 +27,10 @@ $(document).ready(function () {
     ws.onmessage = function (websocket) {
         var received_msg = JSON.parse(websocket.data);
         console.log("Message is received..." + JSON.stringify(websocket.data));
-        lang = received_msg["lang"];
+        land = received_msg["country"];
         city = received_msg["city"];
         notes = received_msg["notes"];
-        localStorage.setItem("lang", lang);
+        localStorage.setItem("country", land);
         localStorage.setItem("city", city);
         localStorage.setItem("notes", notes);
         gettingJSON();
@@ -51,6 +51,7 @@ function gettingJSON() {
         console.log(json.name);
         myjson = json;
         updateUI();
+        console.log(getURL());
     });
 
     console.log("3 - Zeile nach getJSON()");
@@ -69,6 +70,8 @@ function updateUI() {
     document.getElementById('windspeed').innerHTML = "Windgeschwindigkeit " + myjson.wind.speed + " km/h";
     document.getElementById('description').innerHTML = myjson.weather[0].description;
     document.getElementById("image").src = "http://openweathermap.org/img/w/" + myjson.weather[0].icon + ".png";
+    document.getElementById('notes').innerHTML = localStorage.getItem("notes");
+    console.log(localStorage.getItem("notes"));
 }
 
 function startTime() {
