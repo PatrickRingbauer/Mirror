@@ -26,7 +26,9 @@ app.post('/weather', function (req, res) {
     }
     clients.forEach(function (client) {
         console.log("in forEach: " + client);
-        client.send(JSON.stringify(objectToSend));
+        if (client.readyState === client.OPEN) {
+            client.send(JSON.stringify(objectToSend));
+        }
     });
     res.send(JSON.stringify({ "statusCode": "OK" }))
 })
